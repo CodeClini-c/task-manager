@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice-Controlled Todo List</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Mobile web app capability -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Voice Todo">
+    <meta name="theme-color" content="#5e72e4">
+    
+    <!-- Default icons (will be replaced with actual icons) -->
+    <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Voice Todo</h1>
+            <button id="voice-button">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </header>
+
+        <!-- Progress Section -->
+        <div class="progress-container">
+            <div class="progress-stats">
+                <div class="stat">
+                    <span id="streak-count">0</span>
+                    <small>Day Streak 🔥</small>
+                </div>
+                <div class="stat">
+                    <span id="completed-today">0</span>
+                    <span>/</span>
+                    <span id="daily-goal">3</span>
+                    <small>Today's Tasks</small>
+                </div>
+            </div>
+            <div class="progress-bar" id="daily-progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        <div class="input-section">
+            <input type="text" id="task-input" placeholder="Add a new task...">
+            <button id="add-button">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        
+        <div id="status-message" class="status-message"></div>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        
+        <ul id="task-list"></ul>
+        
+        <!-- Achievements Row -->
+        <div class="badges-row" id="badges-container">
+            <!-- Badges will be added dynamically -->
+        </div>
+        
+        <!-- Feedback Modal -->
+        <div id="feedback-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="modal-message"></div>
+                <div id="modal-badge" class="badge-large"></div>
+            </div>
+        </div>
+
+        <!-- Voice Commands Help -->
+        <div class="voice-help">
+            <button class="help-toggle" id="help-toggle">
+                <i class="fas fa-question-circle"></i> Voice Commands
+            </button>
+            <div class="help-content" id="help-content">
+                <ul>
+                    <li><strong>Add [task]</strong> - Adds a new task</li>
+                    <li><strong>Complete [task]</strong> - Marks task as completed</li>
+                    <li><strong>Delete [task]</strong> - Removes the task</li>
+                    <li><strong>Show all tasks</strong> - Shows all tasks</li>
+                    <li><strong>Show active tasks</strong> - Shows only active tasks</li>
+                    <li><strong>Show completed tasks</strong> - Shows only completed tasks</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/js/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
