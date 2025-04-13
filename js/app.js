@@ -2,6 +2,7 @@
 const taskInput = document.getElementById('task-input');
 const addButton = document.getElementById('add-button');
 const voiceButton = document.getElementById('voice-button');
+const themeToggle = document.getElementById('theme-toggle');
 const taskList = document.getElementById('task-list');
 const statusMessage = document.getElementById('status-message');
 const filterButtons = document.querySelectorAll('.filter-btn');
@@ -28,7 +29,8 @@ let userStats = {
     totalCompleted: 0,
     lastActive: null,
     dailyGoal: 3, // Default daily goal
-    achievements: []
+    achievements: [],
+    darkMode: false // Add dark mode preference to user stats
 };
 
 // Motivational messages
@@ -495,6 +497,29 @@ function toggleHelpContent() {
     helpContent.classList.toggle('active');
 }
 
+// Toggle dark mode
+function toggleDarkMode() {
+    // Toggle the dark mode state
+    userStats.darkMode = !userStats.darkMode;
+    
+    // Apply the appropriate theme
+    applyTheme();
+    
+    // Save user preference
+    saveUserStats();
+}
+
+// Apply theme based on user preference
+function applyTheme() {
+    if (userStats.darkMode) {
+        document.body.classList.add('dark-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Change to sun icon in dark mode
+    } else {
+        document.body.classList.remove('dark-mode');
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Change to moon icon in light mode
+    }
+}
+
 // Save tasks to local storage
 function saveToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -528,6 +553,9 @@ function init() {
     updateStats();
     renderAchievements();
     
+    // Apply saved theme preference
+    applyTheme();
+    
     addButton.addEventListener('click', () => addTask(taskInput.value));
     
     taskInput.addEventListener('keydown', (e) => {
@@ -537,6 +565,9 @@ function init() {
     });
     
     voiceButton.addEventListener('click', toggleSpeechRecognition);
+    
+    // Theme toggle functionality
+    themeToggle.addEventListener('click', toggleDarkMode);
     
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => filterTasks(btn.getAttribute('data-filter')));
