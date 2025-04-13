@@ -1,4 +1,5 @@
 :root {
+    /* Light mode (default) */
     --primary-color: #5e72e4;
     --primary-light: #7d8ff6;
     --primary-dark: #324cdd;
@@ -15,6 +16,24 @@
     --card-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
     --transition-speed: 0.3s;
     --border-radius: 8px;
+}
+
+/* Dark Mode Variables */
+.dark-mode {
+    --primary-color: #7d8ff6;
+    --primary-light: #a1b0ff;
+    --primary-dark: #4e65d9;
+    --secondary-color: #1e2130;
+    --accent-color: #0fbbe0;
+    --success-color: #2dce89;
+    --warning-color: #fb6340;
+    --danger-color: #f5365c;
+    --dark-color: #e9ecef;
+    --gray-color: #a3b1c2;
+    --light-gray: #3a4354;
+    --text-color: #d3dce9;
+    --white: #2d3748;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 * {
@@ -60,6 +79,47 @@ h1 {
     font-weight: 700;
     color: var(--dark-color);
     margin: 0;
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--gray-color);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all var(--transition-speed);
+}
+
+.theme-toggle:hover {
+    background-color: var(--light-gray);
+    color: var(--dark-color);
+}
+
+.dark-mode .theme-toggle .fa-moon {
+    display: none;
+}
+
+.theme-toggle .fa-sun {
+    display: none;
+}
+
+.dark-mode .theme-toggle .fa-sun {
+    display: inline;
+    color: var(--warning-color);
 }
 
 /* Voice Button */
@@ -554,16 +614,4 @@ h1 {
     #task-list {
         -webkit-overflow-scrolling: touch;
     }
-}
-
-/* Dark mode toggle - for future implementation */
-.theme-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    font-size: 1.2rem;
-    color: var(--gray-color);
-    cursor: pointer;
 }
